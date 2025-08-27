@@ -1,0 +1,25 @@
+# Dependências
+node_modules/
+package-lock.json
+
+# Build
+dist/
+www/
+build/
+
+# Angular
+.angular/
+coverage/
+
+# Capacitor / Cordova
+android/
+ios/
+
+# IDE / Editor
+.vscode/
+.idea/
+
+# Sistema
+.DS_Store
+Thumbs.db
+

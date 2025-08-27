@@ -1,0 +1,36 @@
+.dark-mode {
+  --background: #121212;
+  color: #e0e0e0;
+}
+
+ion-toolbar {
+  --background: var(--ion-color-step-50, #1f1f1f);
+  --color: #ffffff;
+}
+
+ion-item {
+  --background: var(--ion-color-step-100, #1e1e1e);
+  --color: #ffffff;
+}
+
+ion-item-option[color="tertiary"] {
+  --background: #3f51b5;
+  --color: #ffffff;
+}
+
+ion-item-option[color="danger"] {
+  --background: #d32f2f;
+  --color: #ffffff;
+}
+
+ion-fab-button[color="tertiary"] {
+  --background: #3f51b5;
+  --color: #ffffff;
+}
+
+.no-contacts {
+  text-align: center;
+  margin-top: 20px;
+  color: #aaaaaa;
+  font-style: italic;
+}

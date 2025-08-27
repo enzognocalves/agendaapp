@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Contatos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        .form-group button {
+            padding: 10px 15px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .form-group button:hover {
+            background-color: #0056b3;
+        }
+        #lista-contatos {
+            margin-top: 20px;
+        }
+        #lista-contatos div {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Cadastro de Contatos</h1>
+    <div>
+        <div class="form-group">
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" placeholder="Digite o nome">
+        </div>
+        <div class="form-group">
+            <label for="telefone">Telefone:</label>
+            <input type="text" id="telefone" placeholder="Digite o telefone">
+        </div>
+        <div class="form-group">
+            <label for="genero">Gênero:</label>
+            <select id="genero">
+                <option value="">Selecione</option>
+                <option value="Masculino">Masculino</option>
+                <option value="Feminino">Feminino</option>
+                <option value="Outro">Outro</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Data de Nascimento:</label>
+            <span id="data-selecionada">Nenhuma data selecionada</span>
+            <br>
+            <input type="date" id="data-nascimento" onchange="selecionarData()">
+        </div>
+        <div class="form-group">
+            <button id="btnAdicionar">Adicionar Contato</button>
+            <button id="btnLimpar">Limpar Campos</button>
+        </div>
+    </div>
+    <div id="lista-contatos">
+        <p style="text-align: center; color: #888;">Nenhum contato cadastrado ainda</p>
+    </div>
+
+    <script>
+        // Array para armazenar os contatos
+        const contatos = [];
+
+        // Função para selecionar a data
+        function selecionarData() {
+            const dataInput = document.getElementById('data-nascimento').value;
+            const dataSelecionada = document.getElementById('data-selecionada');
+
+            if (dataInput) {
+                const data = new Date(dataInput);
+                const dataFormatada = data.toLocaleDateString('pt-BR', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric'
+                });
+                dataSelecionada.textContent = dataFormatada;
+            } else {
+                dataSelecionada.textContent = 'Nenhuma data selecionada';
+            }
+        }
+
+        // Função para adicionar contato
+        function adicionarContato() {
+            const nome = document.getElementById('nome').value;
+            const telefone = document.getElementById('telefone').value;
+            const genero = document.getElementById('genero').value;
+            const dataFormatada = document.getElementById('data-selecionada').textContent;
+
+            if (!nome || !telefone) {
+                alert('Por favor, preencha os campos obrigatórios.');
+                return;
+            }
+
+            const novoContato = {
+                nome,
+                telefone,
+                genero: genero || 'Não informado',
+                dataNascimento: dataFormatada
+            };
+            
+            contatos.push(novoContato);
+            atualizarListaContatos();
+            
+            alert(`Contato ${nome} cadastrado com sucesso!`);
+            
+            // Limpar os campos
+            document.getElementById('nome').value = '';
+            document.getElementById('telefone').value = '';
+            document.getElementById('genero').value = '';
+            document.getElementById('data-selecionada').textContent = 'Nenhuma data selecionada';
+            document.getElementById('data-nascimento').value = '';
+        }
+        
+        // Função para atualizar a lista de contatos
+        function atualizarListaContatos() {
+            const listaContatos = document.getElementById('lista-contatos');
+            
+            if (contatos.length === 0) {
+                listaContatos.innerHTML = '<p style="text-align: center; color: #888;">Nenhum contato cadastrado ainda</p>';
+                return;
+            }
+
+            listaContatos.innerHTML = contatos.map(contato => `
+                <div>
+                    <p><strong>Nome:</strong> ${contato.nome}</p>
+                    <p><strong>Telefone:</strong> ${contato.telefone}</p>
+                    <p><strong>Gênero:</strong> ${contato.genero}</p>
+                    <p><strong>Data de Nascimento:</strong> ${contato.dataNascimento}</p>
+                </div>
+            `).join('');
+        }
+
+        // Adicionar eventos aos botões
+        document.getElementById('btnAdicionar').addEventListener('click', adicionarContato);
+        document.getElementById('btnLimpar').addEventListener('click', function () {
+            document.getElementById('nome').value = '';
+            document.getElementById('telefone').value = '';
+            document.getElementById('genero').value = '';
+            document.getElementById('data-selecionada').textContent = 'Nenhuma data selecionada';
+            document.getElementById('data-nascimento').value = '';
+        });
+    </script>
+</body>
+</html>
